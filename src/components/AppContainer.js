@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { MenuCategorias } from './MenuCategorias'
 import axios from "axios";
 import styled from 'styled-components'
+import { FooterComponent } from './FooterComponent'
+
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -197,7 +199,7 @@ export class AppContainer extends Component {
           />
         </MenuContent>
         <Footer>
-          #Footer
+          <FooterComponent />
         </Footer>
       </PageContainer>
     )
