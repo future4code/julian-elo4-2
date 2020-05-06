@@ -58,10 +58,6 @@ export class AppContainer extends Component {
     
   } 
 
-  mostraProdutos = () => {
-    console.log(this.state.produtos)
-  }
-
 
   render() {
 
@@ -73,9 +69,6 @@ export class AppContainer extends Component {
     }
     
     return (
-      <div>
-          <button onClick={this.mostraProdutos}>Console</button>
-      </div>
       <PageContainer>
         <NavBar>
           #Navbar
