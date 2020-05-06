@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { FooterComponent } from './FooterComponent'
+
 
 const PageContainer = styled.section`
 width: 100vw;
@@ -47,7 +49,7 @@ export class AppContainer extends Component {
           #Categorias
         </MenuContent>
         <Footer>
-          #Footer
+          <FooterComponent />
         </Footer>
       </PageContainer>
     )
