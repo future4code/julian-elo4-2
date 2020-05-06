@@ -39,9 +39,9 @@ background-color: #202020;
 
 
 export class AppContainer extends Component {
-
   state = {
-    produtos:[]
+    produtos:[],
+    perfilDoUsuario: ''
   }
 
   componentDidMount = () => {
@@ -58,6 +58,13 @@ export class AppContainer extends Component {
     
   } 
 
+  perfilComprador = () => {
+    this.setState({perfilDoUsuario: 'comprador'})
+  }
+
+  perfilVendedor = () => {
+    this.setState({perfilDoUsuario: 'vendedor'})
+  }
 
   render() {
 
@@ -67,14 +74,33 @@ export class AppContainer extends Component {
       let categoria = <li>categoria {i}</li>
       listaCategorias.push(categoria)
     }
-    
+
+    let telaDoComprador
+    let telaDoVendedor
+    let telaDeEscolha
+    switch (this.state.perfilDoUsuario) {
+      case 'comprador':
+       telaDoComprador = '<Componente do Comprador />'
+       break
+      case 'vendedor':
+        telaDoVendedor = '<Componente do Vendedor />'
+        break
+      default:
+        telaDeEscolha = '<Componente de Escolha />'
+    }
+
     return (
       <PageContainer>
         <NavBar>
           #Navbar
         </NavBar>
         <MainContent>
-          #Produtos
+          {telaDoComprador}
+          {telaDoVendedor}
+          {telaDeEscolha}
+          <br />
+          <button onClick={this.perfilComprador}>teste comprador</button>
+          <button onClick={this.perfilVendedor}>teste vendedor</button>
         </MainContent>
         <MenuContent>
           <MenuCategorias
