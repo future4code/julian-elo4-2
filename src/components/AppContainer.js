@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+
+import { MenuCategorias } from './MenuCategorias'
+
 import styled from 'styled-components'
 
 const PageContainer = styled.section`
@@ -9,7 +12,7 @@ grid-template-areas: 'upperPage upperPage'
                      'leftPage rightPage'
                      'bottomPage bottomPage';
 grid-template-rows: 1fr 5fr 1fr;
-grid-template-columns: 1fr 3fr;
+grid-template-columns: 1fr 5fr;
 `
 
 const NavBar = styled.nav`
@@ -26,6 +29,8 @@ const MenuContent = styled.section`
 grid-area: leftPage;
 background-color: #F5F5F5;
 border-right: 1px #202020 solid;
+display:flex;
+justify-content: center;
 `
 
 const Footer = styled.footer`
@@ -34,7 +39,16 @@ background-color: #202020;
 `
 
 export class AppContainer extends Component {
+
   render() {
+
+    //Popula a lista de categorias antes da integração com a API
+    let listaCategorias = []
+    for(let i = 0; i < 10; i++) {
+      let categoria = <li>categoria {i}</li>
+      listaCategorias.push(categoria)
+    }
+    
     return (
       <PageContainer>
         <NavBar>
@@ -44,7 +58,9 @@ export class AppContainer extends Component {
           #Produtos
         </MainContent>
         <MenuContent>
-          #Categorias
+          <MenuCategorias
+            categoria={listaCategorias}
+          />
         </MenuContent>
         <Footer>
           #Footer
