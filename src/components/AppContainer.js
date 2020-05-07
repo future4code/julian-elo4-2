@@ -17,11 +17,11 @@ const PageContainer = styled.section`
 width: 100vw;
 height: 100vh;
 display: grid;
-grid-template-areas: 'upperPage upperPage'
-                     'leftPage rightPage'
-                     'bottomPage bottomPage';
+grid-template-areas: 'upperPage'
+                     'mainPage'
+                     'bottomPage';
 grid-template-rows: 1fr 5fr 1fr;
-grid-template-columns: 1fr 5fr;
+grid-template-columns: 1fr;
 `
 
 const NavBar = styled.nav`
@@ -30,12 +30,14 @@ background-color: #f2970b;
 `
 
 const MainContent = styled.section`
-grid-area: rightPage;
+grid-area: mainPage;
 background-color: #F5F5F5;
+display: flex;
+justify-content: flex-start;
 `
 
 const MenuContent = styled.section`
-grid-area: leftPage;
+width: 15%;
 background-color: #F5F5F5;
 border-right: 1px #202020 solid;
 display:flex;
@@ -55,12 +57,15 @@ const ContainerCadastro = styled.div`
   color: white;
   text-align: center;
 `
+
 const Interrogacao = styled(HelpIcon)`
   color: #65E0E5;
 `
+
 const TituloCadastro = styled.h2`
   font-size: 2.5rem;
 `
+
 const FormularioEnvio = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -71,11 +76,20 @@ const FormInput = styled(TextField)`
   width: 18rem;
   background-color: white;
 `
+
 export class AppContainer extends Component {
   state = {
     produtos:[],
     perfilDoUsuario: '',
-    produtosFiltradosPorCategoria: []
+    produtosFiltradosPorCategoria: [],
+    inputNomeProduto: '',
+    inputCategoriaProduto: '',
+    inputPrecoProduto: '',
+    inputParcelasProduto: '',
+    inputFormasPagamentoProduto: '',
+    inputUrlUmProduto: '',
+    inputUrlDoisProduto: '',
+    inputDescricaoProduto: ''
   }
 
     componentDidMount = () => {
@@ -89,6 +103,25 @@ export class AppContainer extends Component {
         console.log(this.state.produtos[1].category)
       } catch(error) {
         console.log(error)
+      }
+    }
+
+    cadastraProduto = async () => {
+      const body = {
+        "name": this.state.inputNomeProduto,
+        "description": this.state.inputDescricaoProduto,
+        "price": this.state.inputPrecoProduto,
+        "paymentMethod": [this.state.inputFormasPagamentoProduto],
+        "category": this.state.inputCategoriaProduto,
+        "photos": [this.state.inputUrlUmProduto, this.state.inputUrlDoisProduto],
+        "installments": this.state.inputParcelasProduto
+      }
+      
+      try {
+        const resposta = await axios.post('https://us-central1-labenu-apis.cloudfunctions.net/eloFourTwo/products', body)
+        console.log("CADASTROU")
+      } catch(error) {
+        console.log("ERROR")
       }
     }
 
@@ -109,6 +142,39 @@ export class AppContainer extends Component {
     this.setState({perfilDoUsuario: 'vendedor'})
   }
 
+  pegaNomeProduto = (event) => {
+    this.setState({inputNomeProduto: event.target.value})
+  }
+
+  pegaCategoriaProduto = (event) => {
+    this.setState({inputCategoriaProduto: event.target.value})
+  }
+
+  pegaPrecoProduto = (event) => {
+    this.setState({inputPrecoProduto: Number(event.target.value)})  
+  }
+
+  pegaParcelasProduto = (event) => {
+    this.setState({inputParcelasProduto: Number(event.target.value)})  
+  }
+
+  pegaFormasPagamentoProduto = (event) => {
+    this.setState({inputFormasPagamentoProduto: event.target.value})  
+  }
+
+  pegaUrlUmProduto = (event) => {
+    this.setState({inputUrlUmProduto: event.target.value})  
+  }
+
+  pegaUrlDoisProduto = (event) => {
+    this.setState({inputUrlDoisProduto: event.target.value})  
+  }
+
+  pegaDescricaoProduto = (event) => {
+    this.setState({inputDescricaoProduto: event.target.value})
+  }
+
+
   render() {
 
     const paginaCadastro =
@@ -118,58 +184,77 @@ export class AppContainer extends Component {
           <FormInput
             required
             label="Nome do Produto"
+            onChange={this.pegaNomeProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Categoria"
+            onChange={this.pegaCategoriaProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Preço R$"
+            onChange={this.pegaPrecoProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Parcelas"
+            onChange={this.pegaParcelasProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Formas de pagamento"
+            onChange={this.pegaFormasPagamentoProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Foto URL 1"
+            onChange={this.pegaUrlUmProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Foto URL 2"
+            onChange={this.pegaUrlDoisProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             label="Descrição"
+            onChange={this.pegaDescricaoProduto}
             multiline
             margin="normal"
             variant="filled"
           />
         </FormularioEnvio>
-        <Button variant="contained">
+        <Button onClick={this.cadastraProduto} variant="contained">
             Cadastrar Produto
         </Button>
       </ContainerCadastro>
 
 
+
+    const menu = 
+    <MenuCategorias
+    categoria={this.state.produtos.map((produto) => {
+      return  <li>
+                <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
+                  {produto.category}
+                </a>
+              </li>
+      })}
+    />
     //Popula a lista de categorias antes da integração com a API
     //let listaCategorias = []
     //for(let i = 0; i < 10; i++) {
@@ -182,10 +267,10 @@ export class AppContainer extends Component {
     let telaDeEscolha
     switch (this.state.perfilDoUsuario) {
       case 'comprador':
-       telaDoComprador = '<Componente do Comprador />'
+       telaDoComprador = '<Componente de Comprador />'
        break
       case 'vendedor':
-        telaDoVendedor = '<Componente do Vendedor />'
+        telaDoVendedor = paginaCadastro
         break
       default:
         telaDeEscolha = '<Componente de Escolha />'
@@ -197,6 +282,21 @@ export class AppContainer extends Component {
           <Nav/>
         </NavBar>
         <MainContent>
+        {telaDoComprador && (
+          <MenuContent>
+            <MenuCategorias
+              categoria={this.state.produtos.map((produto) => {
+                return (
+                <li>
+                  <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
+                    {produto.category}
+                  </a>
+                </li>
+                )
+              })}
+            />
+          </MenuContent>)}
+          <div>
           {telaDoComprador}
           {telaDoVendedor}
           {telaDeEscolha}
@@ -205,17 +305,6 @@ export class AppContainer extends Component {
            buttonVender={this.perfilVendedor}
         />
         </MainContent>
-        <MenuContent>
-          <MenuCategorias
-            categoria={this.state.produtos.map((produto) => {
-              return  <li>
-                        <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
-                          {produto.category}
-                        </a>
-                      </li>
-            })}
-          />
-        </MenuContent>
         <Footer>
           <FooterComponent />
         </Footer>        
