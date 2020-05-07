@@ -17,21 +17,20 @@ const ContainerPrincipal = styled.div`
 `
 
 const ContainerCards = styled.div`
- 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
-  @media (max-width: 800px) {
+  gap: 1.5rem;
+  @media (max-width: 950px) {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  margin-top: 50px;
     
 `
 const CardProduto = styled(Card)`
   width: 16rem;
-  height: 25rem;
+  margin: 2rem;
 `
 
 export default class PaginaComprador extends React.Component {
@@ -69,8 +68,13 @@ export default class PaginaComprador extends React.Component {
     })
 
     return (
+      
       <ContainerPrincipal>
-        {produtosLista}
+        <Filtro />
+        <ContainerCards>
+          {produtosLista}
+        </ContainerCards>
+        
       </ContainerPrincipal>
     );
   }

@@ -62,7 +62,7 @@ export class FooterComponent extends Component {
             <a href='#'><I className="fas fa-lock"></I></a>              
           </SiteSeguro>        
         </ContainerFooter>
-        <Copyright>Arthur - Isaac - Jarry - Murilo &copy;elo4 2020 labenu</Copyright>        
+        <Copyright>Arthur - Isaac - Jerry - Murilo &copy;elo4 2020 labenu</Copyright>        
       </>
     )
   }
