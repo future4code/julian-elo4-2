@@ -8,6 +8,7 @@ import { FooterComponent } from './FooterComponent'
 import { Filtro } from './BarraFiltro'
 
 import { TelaInicial } from './TelaInicial'
+import PaginaComprador from './PaginaComprador';
 
 
 
@@ -260,11 +261,14 @@ export class AppContainer extends Component {
       })}
     />
 
-      const paginaDeEscolha = 
+    const paginaDeEscolha = 
       <TelaInicial 
       buttonComprar={this.perfilComprador}
       buttonVender={this.perfilVendedor}
     />
+    
+    const paginaComprador = <PaginaComprador />
+
 
     //Popula a lista de categorias antes da integração com a API
     //let listaCategorias = []
@@ -278,7 +282,7 @@ export class AppContainer extends Component {
     let telaDeEscolha
     switch (this.state.perfilDoUsuario) {
       case 'comprador':
-       telaDoComprador = '<Componente de Comprador />'
+       telaDoComprador = paginaComprador
        break
       case 'vendedor':
         telaDoVendedor = paginaCadastro
