@@ -255,6 +255,13 @@ export class AppContainer extends Component {
               </li>
       })}
     />
+
+      const paginaDeEscolha = 
+      <TelaInicial 
+      buttonComprar={this.perfilComprador}
+      buttonVender={this.perfilVendedor}
+    />
+
     //Popula a lista de categorias antes da integração com a API
     //let listaCategorias = []
     //for(let i = 0; i < 10; i++) {
@@ -273,7 +280,7 @@ export class AppContainer extends Component {
         telaDoVendedor = paginaCadastro
         break
       default:
-        telaDeEscolha = '<Componente de Escolha />'
+        telaDeEscolha = paginaDeEscolha
     } 
 
     return (
@@ -294,16 +301,12 @@ export class AppContainer extends Component {
                 </li>
                 )
               })}
+            
             />
-          </MenuContent>)}
-          <div>
-          {telaDoComprador}
-          {telaDoVendedor}
-          {telaDeEscolha}
-        <TelaInicial 
-           buttonComprar={this.perfilComprador}
-           buttonVender={this.perfilVendedor}
-        />
+            </MenuContent>)}
+            {telaDoComprador}
+            {telaDoVendedor}
+            {telaDeEscolha}
         </MainContent>
         <Footer>
           <FooterComponent />
