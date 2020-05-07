@@ -85,6 +85,7 @@ export class AppContainer extends Component {
     produtos:[],
     perfilDoUsuario: '',
     produtosFiltradosPorCategoria: [],
+    produtosFiltradosOrdemAlfabetica: [],
     inputNomeProduto: '',
     inputCategoriaProduto: '',
     inputPrecoProduto: '',
@@ -103,7 +104,6 @@ export class AppContainer extends Component {
       try {
         const resposta = await axios.get('https://us-central1-labenu-apis.cloudfunctions.net/eloFourTwo/products');
         this.setState({produtos: resposta.data.products})
-        console.log(this.state.produtos[1].category)
       } catch(error) {
         console.log(error)
       }
@@ -135,6 +135,15 @@ export class AppContainer extends Component {
       }
     })
     this.setState({produtosFiltradosPorCategoria: categoriaFiltrada})
+  }
+
+  filtroOrdemAlfabetica = () => {
+    const filtroOrdemAlfabetica = this.state.produtos.slice(0)
+    filtroOrdemAlfabetica.sort(function(a,b) {
+      let x = a.name
+      let y = b.name
+      return x < y ? -1 : x > y ? 1 : 0
+    })
   }
 
   perfilComprador = () => {
@@ -179,7 +188,7 @@ export class AppContainer extends Component {
 
 
   render() {
-
+this.filtroOrdemAlfabetica()
     const paginaCadastro =
       <ContainerCadastro>
         <TituloCadastro>O que você deseja vender <Interrogacao fontSize="large"/></TituloCadastro>
