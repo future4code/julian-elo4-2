@@ -23,7 +23,8 @@ const LogoContainer = styled.div`
 
 const SearchContainer = styled.div`
     display: flex
-    align-items: center
+    align-items: center;
+    margin-top: 3rem!important;
 `
 
 const LogoA = styled.img`

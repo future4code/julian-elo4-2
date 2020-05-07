@@ -74,7 +74,15 @@ export class AppContainer extends Component {
   state = {
     produtos:[],
     perfilDoUsuario: '',
-    produtosFiltradosPorCategoria: []
+    produtosFiltradosPorCategoria: [],
+    inputNomeProduto: '',
+    inputCategoriaProduto: '',
+    inputPrecoProduto: '',
+    inputParcelasProduto: '',
+    inputFormasPagamentoProduto: '',
+    inputUrlUmProduto: '',
+    inputUrlDoisProduto: '',
+    inputDescricaoProduto: ''
   }
 
     componentDidMount = () => {
@@ -88,6 +96,25 @@ export class AppContainer extends Component {
         console.log(this.state.produtos[1].category)
       } catch(error) {
         console.log(error)
+      }
+    }
+
+    cadastraProduto = async () => {
+      const body = {
+        "name": this.state.inputNomeProduto,
+        "description": this.state.inputDescricaoProduto,
+        "price": this.state.inputPrecoProduto,
+        "paymentMethod": [this.state.inputFormasPagamentoProduto],
+        "category": this.state.inputCategoriaProduto,
+        "photos": [this.state.inputUrlUmProduto, this.state.inputUrlDoisProduto],
+        "installments": this.state.inputParcelasProduto
+      }
+      
+      try {
+        const resposta = await axios.post('https://us-central1-labenu-apis.cloudfunctions.net/eloFourTwo/products', body)
+        console.log("CADASTROU")
+      } catch(error) {
+        console.log("ERROR")
       }
     }
 
@@ -108,6 +135,39 @@ export class AppContainer extends Component {
     this.setState({perfilDoUsuario: 'vendedor'})
   }
 
+  pegaNomeProduto = (event) => {
+    this.setState({inputNomeProduto: event.target.value})
+  }
+
+  pegaCategoriaProduto = (event) => {
+    this.setState({inputCategoriaProduto: event.target.value})
+  }
+
+  pegaPrecoProduto = (event) => {
+    this.setState({inputPrecoProduto: Number(event.target.value)})  
+  }
+
+  pegaParcelasProduto = (event) => {
+    this.setState({inputParcelasProduto: Number(event.target.value)})  
+  }
+
+  pegaFormasPagamentoProduto = (event) => {
+    this.setState({inputFormasPagamentoProduto: event.target.value})  
+  }
+
+  pegaUrlUmProduto = (event) => {
+    this.setState({inputUrlUmProduto: event.target.value})  
+  }
+
+  pegaUrlDoisProduto = (event) => {
+    this.setState({inputUrlDoisProduto: event.target.value})  
+  }
+
+  pegaDescricaoProduto = (event) => {
+    this.setState({inputDescricaoProduto: event.target.value})
+  }
+
+
   render() {
 
     const paginaCadastro =
@@ -117,53 +177,61 @@ export class AppContainer extends Component {
           <FormInput
             required
             label="Nome do Produto"
+            onChange={this.pegaNomeProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Categoria"
+            onChange={this.pegaCategoriaProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Preço R$"
+            onChange={this.pegaPrecoProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Parcelas"
+            onChange={this.pegaParcelasProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Formas de pagamento"
+            onChange={this.pegaFormasPagamentoProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Foto URL 1"
+            onChange={this.pegaUrlUmProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             required
             label="Foto URL 2"
+            onChange={this.pegaUrlDoisProduto}
             margin="normal"
             variant="filled"
           />
           <FormInput
             label="Descrição"
+            onChange={this.pegaDescricaoProduto}
             multiline
             margin="normal"
             variant="filled"
           />
         </FormularioEnvio>
-        <Button variant="contained">
+        <Button onClick={this.cadastraProduto} variant="contained">
             Cadastrar Produto
         </Button>
       </ContainerCadastro>
