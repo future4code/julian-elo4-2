@@ -28,88 +28,46 @@ const CardProduto = styled(Card)`
 `
 
 export default class PaginaComprador extends React.Component {
+  // componentDidMount = () => {
+  //   console.log(this.props.listaProdutos)
+  // }
+
   render() {
+    const produtosLista = this.props.listaProdutos.map(produto => {
+      return (
+        <CardProduto>
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              alt={produto.name}
+              height="200"
+              image={produto.photos[0]}
+              title={produto.name}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {produto.name}
+              </Typography>
+              <Typography gutterBottom variant="h5" component="h3">
+                R$ {produto.price}
+              </Typography>
+              <Typography component="p">
+                {produto.description}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button size="small" color="primary" variant="contained">
+              Comprar
+            </Button>
+          </CardActions>
+        </CardProduto>
+      )
+    })
+
     return (
       <ContainerPrincipal>
-
-        <CardProduto>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              alt="Contemplative Reptile"
-              height="200"
-              image="https://i.picsum.photos/id/816/200/200.jpg"
-              title="Contemplative Reptile"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                Lizard
-              </Typography>
-              <Typography component="p">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary" variant="contained">
-              Share
-            </Button>
-          </CardActions>
-        </CardProduto>
-
-        <CardProduto>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              alt="Contemplative Reptile"
-              height="200"
-              image="https://i.picsum.photos/id/819/200/200.jpg"
-              title="Contemplative Reptile"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                Lizard
-              </Typography>
-              <Typography component="p">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary" variant="contained">
-              Share
-            </Button>
-          </CardActions>
-        </CardProduto>
-
-        <CardProduto>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              alt="Contemplative Reptile"
-              height="200"
-              image="https://i.picsum.photos/id/817/200/200.jpg"
-              title="Contemplative Reptile"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                Lizard
-              </Typography>
-              <Typography component="p">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary" variant="contained">
-              Share
-            </Button>
-          </CardActions>
-        </CardProduto>
-
+        {produtosLista}
       </ContainerPrincipal>
     );
   }

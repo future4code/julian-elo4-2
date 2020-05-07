@@ -267,7 +267,7 @@ export class AppContainer extends Component {
       buttonVender={this.perfilVendedor}
     />
     
-    const paginaComprador = <PaginaComprador />
+    const paginaComprador = <PaginaComprador listaProdutos={this.state.produtos} />
 
 
     //Popula a lista de categorias antes da integração com a API
