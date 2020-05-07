@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Filtro } from './BarraFiltro'
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -9,9 +10,14 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-
 const ContainerPrincipal = styled.div`
-  width: 70%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const ContainerCards = styled.div`
+ 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
@@ -20,6 +26,7 @@ const ContainerPrincipal = styled.div`
     flex-direction: column;
     align-items: center;
   }
+  margin-top: 50px;
     
 `
 const CardProduto = styled(Card)`
@@ -31,7 +38,8 @@ export default class PaginaComprador extends React.Component {
   render() {
     return (
       <ContainerPrincipal>
-
+        <Filtro />
+        <ContainerCards>
         <CardProduto>
           <CardActionArea>
             <CardMedia
@@ -109,6 +117,7 @@ export default class PaginaComprador extends React.Component {
             </Button>
           </CardActions>
         </CardProduto>
+        </ContainerCards>
 
       </ContainerPrincipal>
     );

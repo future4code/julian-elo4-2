@@ -5,8 +5,6 @@ import axios from "axios";
 import styled from 'styled-components'
 import { FooterComponent } from './FooterComponent'
 
-import { Filtro } from './BarraFiltro'
-
 import { TelaInicial } from './TelaInicial'
 import PaginaComprador from './PaginaComprador';
 
@@ -298,7 +296,6 @@ export class AppContainer extends Component {
         </NavBar>
         
         <MainContent>
-        <Filtro />
 
         {telaDoComprador && (
           <MenuContent>
