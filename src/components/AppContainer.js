@@ -16,11 +16,11 @@ const PageContainer = styled.section`
 width: 100vw;
 height: 100vh;
 display: grid;
-grid-template-areas: 'upperPage upperPage'
-                     'leftPage rightPage'
-                     'bottomPage bottomPage';
+grid-template-areas: 'upperPage'
+                     'mainPage'
+                     'bottomPage';
 grid-template-rows: 1fr 5fr 1fr;
-grid-template-columns: 1fr 5fr;
+grid-template-columns: 1fr;
 `
 
 const NavBar = styled.nav`
@@ -29,12 +29,14 @@ background-color: #f2970b;
 `
 
 const MainContent = styled.section`
-grid-area: rightPage;
+grid-area: mainPage;
 background-color: #F5F5F5;
+display: flex;
+justify-content: flex-start;
 `
 
 const MenuContent = styled.section`
-grid-area: leftPage;
+width: 15%;
 background-color: #F5F5F5;
 border-right: 1px #202020 solid;
 display:flex;
@@ -54,12 +56,15 @@ const ContainerCadastro = styled.div`
   color: white;
   text-align: center;
 `
+
 const Interrogacao = styled(HelpIcon)`
   color: #65E0E5;
 `
+
 const TituloCadastro = styled.h2`
   font-size: 2.5rem;
 `
+
 const FormularioEnvio = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -70,6 +75,7 @@ const FormInput = styled(TextField)`
   width: 18rem;
   background-color: white;
 `
+
 export class AppContainer extends Component {
   state = {
     produtos:[],
@@ -169,6 +175,17 @@ export class AppContainer extends Component {
       </ContainerCadastro>
 
 
+
+    const menu = 
+    <MenuCategorias
+    categoria={this.state.produtos.map((produto) => {
+      return  <li>
+                <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
+                  {produto.category}
+                </a>
+              </li>
+      })}
+    />
     //Popula a lista de categorias antes da integração com a API
     //let listaCategorias = []
     //for(let i = 0; i < 10; i++) {
@@ -181,10 +198,10 @@ export class AppContainer extends Component {
     let telaDeEscolha
     switch (this.state.perfilDoUsuario) {
       case 'comprador':
-       telaDoComprador = '<Componente do Comprador />'
+       telaDoComprador = '<Componente de Comprador />'
        break
       case 'vendedor':
-        telaDoVendedor = '<Componente do Vendedor />'
+        telaDoVendedor = paginaCadastro
         break
       default:
         telaDeEscolha = '<Componente de Escolha />'
@@ -196,24 +213,29 @@ export class AppContainer extends Component {
           <Nav/>
         </NavBar>
         <MainContent>
+        {telaDoComprador && (
+          <MenuContent>
+            <MenuCategorias
+              categoria={this.state.produtos.map((produto) => {
+                return (
+                <li>
+                  <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
+                    {produto.category}
+                  </a>
+                </li>
+                )
+              })}
+            />
+          </MenuContent>)}
+          <div>
           {telaDoComprador}
           {telaDoVendedor}
           {telaDeEscolha}
-          <br />
-          <button onClick={this.perfilComprador}>teste comprador</button>
-          <button onClick={this.perfilVendedor}>teste vendedor</button>
+            <br />
+            <button onClick={this.perfilComprador}>teste comprador</button>
+            <button onClick={this.perfilVendedor}>teste vendedor</button>
+          </div>
         </MainContent>
-        <MenuContent>
-          <MenuCategorias
-            categoria={this.state.produtos.map((produto) => {
-              return  <li>
-                        <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
-                          {produto.category}
-                        </a>
-                      </li>
-            })}
-          />
-        </MenuContent>
         <Footer>
           <FooterComponent />
         </Footer>
