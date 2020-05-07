@@ -13,18 +13,19 @@ import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
 const NavContainer = styled.div`
-    display: flex
-    align-items: center
+    display: flex;
+    align-items: center;
 `
 
 const LogoContainer = styled.div`
-    width: 30vw
+    width: 30vw;
+   
 `
 
 const SearchContainer = styled.div`
-    display: flex
+    display: flex;
     align-items: center;
-    margin-top: 3rem!important;
+    
 `
 
 const LogoA = styled.img`
