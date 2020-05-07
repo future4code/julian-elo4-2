@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { MenuCategorias } from './MenuCategorias'
+import { Nav } from './Nav/Nav'
 import axios from "axios";
 import styled from 'styled-components'
 import { FooterComponent } from './FooterComponent'
@@ -192,7 +193,7 @@ export class AppContainer extends Component {
     return (
       <PageContainer>
         <NavBar>
-          #Navbar
+          <Nav/>
         </NavBar>
         <MainContent>
           {telaDoComprador}
