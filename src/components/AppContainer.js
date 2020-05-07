@@ -4,6 +4,7 @@ import { Nav } from './Nav/Nav'
 import axios from "axios";
 import styled from 'styled-components'
 import { FooterComponent } from './FooterComponent'
+import { TelaInicial } from './TelaInicial'
 
 
 import TextField from '@material-ui/core/TextField';
@@ -199,9 +200,10 @@ export class AppContainer extends Component {
           {telaDoComprador}
           {telaDoVendedor}
           {telaDeEscolha}
-          <br />
-          <button onClick={this.perfilComprador}>teste comprador</button>
-          <button onClick={this.perfilVendedor}>teste vendedor</button>
+        <TelaInicial 
+           buttonComprar={this.perfilComprador}
+           buttonVender={this.perfilVendedor}
+        />
         </MainContent>
         <MenuContent>
           <MenuCategorias
@@ -216,7 +218,7 @@ export class AppContainer extends Component {
         </MenuContent>
         <Footer>
           <FooterComponent />
-        </Footer>
+        </Footer>        
       </PageContainer>
     )
   }
