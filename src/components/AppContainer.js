@@ -18,7 +18,6 @@ import HelpIcon from '@material-ui/icons/ContactSupport';
 
 const PageContainer = styled.section`
 width: 100vw;
-height: 100vh;
 display: grid;
 grid-template-areas: 'upperPage'
                      'mainPage'
