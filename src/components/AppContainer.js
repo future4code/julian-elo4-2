@@ -4,6 +4,7 @@ import { Nav } from './Nav/Nav'
 import axios from "axios";
 import styled from 'styled-components'
 import { FooterComponent } from './FooterComponent'
+import { Filtro } from './BarraFiltro'
 
 
 import TextField from '@material-ui/core/TextField';
@@ -195,7 +196,9 @@ export class AppContainer extends Component {
         <NavBar>
           <Nav/>
         </NavBar>
+        
         <MainContent>
+        <Filtro />
           {telaDoComprador}
           {telaDoVendedor}
           {telaDeEscolha}
