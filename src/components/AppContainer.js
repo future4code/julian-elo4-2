@@ -52,10 +52,13 @@ background-color: #202020;
 const ContainerCadastro = styled.div`
   background-color: #F49832;
   width: 100vw;
-  height: 50vh;
+  height: 100%;
   border: 1px solid black;
   color: white;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 8rem;
 `
 
 const Interrogacao = styled(HelpIcon)`
@@ -242,11 +245,15 @@ export class AppContainer extends Component {
             multiline
             margin="normal"
             variant="filled"
+
             />
+
         </FormularioEnvio>
-        <Button onClick={this.cadastraProduto} variant="contained">
-            Cadastrar Produto
-        </Button>
+        <div>
+          <Button onClick={this.cadastraProduto} variant="contained">
+              Cadastrar Produto
+          </Button>
+        </div>
       </ContainerCadastro>
 
 
