@@ -52,7 +52,7 @@ export class Nav extends Component {
                     <IconButton>
                         <SearchIcon />
                     </IconButton>
-                    <StyledTextField placeholder="Pesquise"/>
+                    <StyledTextField placeholder="Pesquise" onChange={this.props.OnChangeInput} value={this.props.InputPesquisa} />
                     <IconButton>
                         <ShoppingCartIcon onClick={this.props.botaoCarrinho}/>
                     </IconButton>
