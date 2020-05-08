@@ -37,7 +37,6 @@ export class BarraFiltro extends Component {
     render() {
         return (
             <FiltroContainer>
-                <span>Filtrar: </span>
                 <ValorContainer>
                     <ValorMinimo>
                         <label>De</label>
