@@ -127,7 +127,6 @@ export class AppContainer extends Component {
       
       try {
         const resposta = await axios.post('https://us-central1-labenu-apis.cloudfunctions.net/eloFourTwo/products', body)
-        console.log("CADASTROU")
       } catch(error) {
         console.log("ERROR")
       }
@@ -141,7 +140,6 @@ export class AppContainer extends Component {
     })
     this.setState({produtosPorCategoria: categoriaSelecionada})
     this.setState({exibeCategoria: true})
-    //this.setState({produtosPorCategoria: categoriaSelecionada})
   }
 
   exibeTodasCategorias = () => {
@@ -273,10 +271,17 @@ export class AppContainer extends Component {
                               buttonVender={this.perfilVendedor}
                             />
 
+
+
     const paginaComprador = <div>
                               <PaginaComprador 
-                              listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos}
+
+                              
                               InputBusca={this.state.inputPesquise} 
+
+                                detalheDoProduto={this.infoProdutos}
+                                listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
+
                               />
                               <Carrinho />
                             </div>
