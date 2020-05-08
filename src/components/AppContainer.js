@@ -139,7 +139,6 @@ export class AppContainer extends Component {
     })
     this.setState({produtosPorCategoria: categoriaSelecionada})
     this.setState({exibeCategoria: true})
-    //this.setState({produtosPorCategoria: categoriaSelecionada})
   }
 
   exibeTodasCategorias = () => {
@@ -269,9 +268,10 @@ export class AppContainer extends Component {
 
 
 
-    const paginaComprador =   <div>
-    <PaginaComprador detalheDoProduto={this.infoProdutos}
-                              listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
+    const paginaComprador = <div>
+                              <PaginaComprador 
+                                detalheDoProduto={this.infoProdutos}
+                                listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
                               />
                               <Carrinho />
                             </div>
