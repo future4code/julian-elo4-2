@@ -269,7 +269,8 @@ export class AppContainer extends Component {
 
 
 
-    const paginaComprador = <PaginaComprador detalheDoProduto={this.infoProdutos}
+    const paginaComprador =   <div>
+    <PaginaComprador detalheDoProduto={this.infoProdutos}
                               listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
                               />
                               <Carrinho />
