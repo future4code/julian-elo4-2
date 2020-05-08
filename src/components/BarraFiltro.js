@@ -39,14 +39,21 @@ export class BarraFiltro extends Component {
             <FiltroContainer>
                 <span>Filtrar: </span>
                 <ValorContainer>
-                <ValorMinimo>
-                    <label>De</label>
-                    <StyledTextField placeholder="Valor mínimo"/>
-                </ValorMinimo>
-                <ValorMaximo>
-                    <label>até</label>
-                    <StyledTextField placeholder="Valor máximo" />
-                </ValorMaximo>
+                    <ValorMinimo>
+                        <label>De</label>
+                        <StyledTextField
+                            onChange={this.props.valorMinimo} 
+                            placeholder="Valor mínimo"
+                        />
+                    </ValorMinimo>
+                    <ValorMaximo>
+                        <label>até</label>
+                        <StyledTextField
+                            onChange={this.props.valorMaximo}
+                            placeholder="Valor máximo" 
+                        />
+                    </ValorMaximo>
+                    <button onClick={this.props.aoFiltarIntervaloPreco}>filtrar</button>
                 </ValorContainer>
                 <div>
                     <span>Ordenar por: </span>
