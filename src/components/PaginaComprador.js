@@ -39,6 +39,28 @@ export default class PaginaComprador extends React.Component {
     ordemPreco:[],
     ordemAlfabetica: [],
     ordemCategoria:[],
+    valorMinimo: '',
+    valorMaximo: '',
+    filtroPorIntervalo: []
+  }
+
+  onChangeMinimo = (event) => {
+    this.setState({valorMinimo: Number(event.target.value)})
+  }
+  
+  onChangeMaximo = (event) => {
+    this.setState({valorMaximo: Number(event.target.value)})
+  }
+
+  filtrarPorIntervalo = () => {
+    this.setState({produtos: this.state.produtos = this.props.listaProdutos})
+    this.setState({valorOrdenacao: 'intervalo'})
+    const intervaloPreco = this.state.produtos.filter((produto) => {
+      if(produto.price > this.state.valorMinimo && produto.price < this.state.valorMaximo) {
+        return true
+      }
+    })
+    this.setState({filtroPorIntervalo: this.state.filtroPorIntervalo = intervaloPreco})
   }
 
   ordemPreco = () => {
@@ -87,13 +109,16 @@ export default class PaginaComprador extends React.Component {
     let ordenacao
     switch (this.state.valorOrdenacao) {
       case 'preco':
-        ordenacao = this.state.produtos        
+        ordenacao = this.state.ordemPreco        
         break;
       case 'nome':
         ordenacao = this.state.ordemAlfabetica
         break;
       case 'categoria':
-        ordenacao = this.state.produtos
+        ordenacao = this.state.ordemCategoria
+        break;
+      case 'intervalo':
+        ordenacao = this.state.filtroPorIntervalo
         break;
       default:
         ordenacao = this.props.listaProdutos
@@ -135,6 +160,9 @@ export default class PaginaComprador extends React.Component {
     return (
       <ContainerPrincipal>
         <BarraFiltro
+          valorMinimo={this.onChangeMinimo}
+          valorMaximo={this.onChangeMaximo}
+          aoFiltarIntervaloPreco={this.filtrarPorIntervalo}
           selectOrdenacao={this.selecionatOrdenacao.bind(this)}                           
         />
         <ContainerCards>
