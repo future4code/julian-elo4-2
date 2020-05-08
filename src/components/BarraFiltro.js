@@ -51,7 +51,7 @@ export class BarraFiltro extends Component {
                 <div>
                     <span>Ordenar por: </span>
                     <select onChange={this.props.selectOrdenacao}>
-                        <option vaule='-'> - </option>
+                        <option vaule='default'> - </option>
                         <option value="preco">Preço</option>
                         <option value="nome" >Nome</option>
                         <option value="categoria" >Categoria</option>
