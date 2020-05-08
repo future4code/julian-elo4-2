@@ -56,13 +56,6 @@ export default class DetalhesProduto extends React.Component {
             Fusce sed velit a massa aliquet ornare. Maecenas a suscipit nibh. 
             Duis placerat velit at diam ultrices gravida. 
             Fusce laoreet dui a neque egestas pretium. 
-            Duis risus purus, ultrices eu tincidunt eget, scelerisque sit amet risus. 
-            Donec non nunc at urna vehicula volutpat ac eget massa. Morbi nec egestas turpis. 
-            Nulla porta urna vel lacus ultrices faucibus. 
-            Nam aliquet metus mi, sit amet volutpat tellus malesuada at. 
-            Vivamus eget venenatis nisi, id fermentum dui. 
-            Duis rutrum nisl ut velit interdum vehicula. 
-            In hac habitasse platea dictumst.
           </p>
         </DetalhesProdutoParteDois>
       </ContainerPrincipal>
