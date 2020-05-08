@@ -281,7 +281,7 @@ export class AppContainer extends Component {
 
 
 
-    const paginaComprador = <PaginaComprador detalhesDoProduto={this.infoProdutos}
+    const paginaComprador = <PaginaComprador detalheDoProduto={this.infoProdutos}
                               listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
                             />
                             
