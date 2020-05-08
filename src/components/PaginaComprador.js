@@ -48,7 +48,6 @@ export default class PaginaComprador extends React.Component {
       return (a.price > b.price) ? 1 : ((b.price > a.price) ? -1 : 0)
     })
     this.setState({ordemPreco: this.state.ordemPreco = ordenacaoPreco})
-    console.log(this.state.ordemPreco)
   }
 
   ordemAlfabetica = () => {

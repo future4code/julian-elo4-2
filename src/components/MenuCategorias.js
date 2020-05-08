@@ -12,6 +12,11 @@ export class MenuCategorias extends Component {
             <div>
                 <h3>Categorias</h3>
                 <CategoriesList>
+                <li>
+                  <a href='#' onClick={this.props.exibirCategorias}>
+                      Exibir todas
+                  </a>
+                </li>
                     {this.props.categoria}
                 </CategoriesList>
             </div>

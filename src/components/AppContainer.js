@@ -1,21 +1,18 @@
 import React, { Component } from 'react'
-import { MenuCategorias } from './MenuCategorias'
-import { Nav } from './Nav/Nav'
-import axios from "axios";
-import styled from 'styled-components'
-import { FooterComponent } from './FooterComponent'
-import { BarraFiltro } from './BarraFiltro'
 
-import { TelaInicial } from './TelaInicial'
 import PaginaComprador from './PaginaComprador';
+import { MenuCategorias } from './MenuCategorias'
+import { FooterComponent } from './FooterComponent'
+import { TelaInicial } from './TelaInicial'
+import { Nav } from './Nav/Nav'
 
-
+import styled from 'styled-components'
+import axios from "axios";
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import HelpIcon from '@material-ui/icons/ContactSupport';
-
 
 const PageContainer = styled.section`
 width: 100vw;
@@ -83,8 +80,9 @@ const FormInput = styled(TextField)`
 export class AppContainer extends Component {
   state = {
     produtos:[],
+    produtosPorCategoria: [],
+    exibeCategoria: false,
     perfilDoUsuario: '',
-    produtosFiltradosPorCategoria: [],
     inputNomeProduto: '',
     inputCategoriaProduto: '',
     inputPrecoProduto: '',
@@ -93,36 +91,32 @@ export class AppContainer extends Component {
     inputUrlUmProduto: '',
     inputUrlDoisProduto: '',
     inputDescricaoProduto: '',
-    valorOrdenacao: 'default',
-    OrdenacaoAlfabetica: [],
-    filtroOrdemAlfabetica: []
-    
+
   }
 
-    componentDidMount = () => {
-      this.buscaProdutos();
+  componentDidMount = () => {
+    this.buscaProdutos();
+  }
 
+  buscaProdutos = async () => {
+    try {
+      const resposta = await axios.get('https://us-central1-labenu-apis.cloudfunctions.net/eloFourTwo/products');
+      this.setState({produtos: resposta.data.products})
+    } catch(error) {
+      console.log(error)
     }
+  }
 
-    buscaProdutos = async () => {
-      try {
-        const resposta = await axios.get('https://us-central1-labenu-apis.cloudfunctions.net/eloFourTwo/products');
-        this.setState({produtos: resposta.data.products})
-      } catch(error) {
-        console.log(error)
-      }
+  cadastraProduto = async () => {
+    const body = {
+      "name": this.state.inputNomeProduto,
+      "description": this.state.inputDescricaoProduto,
+      "price": this.state.inputPrecoProduto,
+      "paymentMethod": [this.state.inputFormasPagamentoProduto],
+      "category": this.state.inputCategoriaProduto,
+      "photos": [this.state.inputUrlUmProduto, this.state.inputUrlDoisProduto],
+      "installments": this.state.inputParcelasProduto
     }
-
-    cadastraProduto = async () => {
-      const body = {
-        "name": this.state.inputNomeProduto,
-        "description": this.state.inputDescricaoProduto,
-        "price": this.state.inputPrecoProduto,
-        "paymentMethod": [this.state.inputFormasPagamentoProduto],
-        "category": this.state.inputCategoriaProduto,
-        "photos": [this.state.inputUrlUmProduto, this.state.inputUrlDoisProduto],
-        "installments": this.state.inputParcelasProduto
-      }
       
       try {
         const resposta = await axios.post('https://us-central1-labenu-apis.cloudfunctions.net/eloFourTwo/products', body)
@@ -130,15 +124,21 @@ export class AppContainer extends Component {
       } catch(error) {
         console.log("ERROR")
       }
-    }
+  }
 
-  filtroCategoria = (nomeDaCategoria) => {
-    const categoriaFiltrada = this.state.produtos.filter(produto => {
+  selecionaCategoria = (nomeDaCategoria) => {
+    const categoriaSelecionada = this.state.produtos.filter(produto => {
       if(produto.category === nomeDaCategoria) {
         return true
       }
     })
-    this.setState({produtosFiltradosPorCategoria: categoriaFiltrada})
+    this.setState({produtosPorCategoria: categoriaSelecionada})
+    this.setState({exibeCategoria: true})
+    //this.setState({produtosPorCategoria: categoriaSelecionada})
+  }
+
+  exibeTodasCategorias = () => {
+    this.setState({exibeCategoria: false})
   }
 
   perfilComprador = () => {
@@ -180,44 +180,6 @@ export class AppContainer extends Component {
   pegaDescricaoProduto = (event) => {
     this.setState({inputDescricaoProduto: event.target.value})
   }
-
-
-
-
-
-
-
-  //  filtroOrdemAlfabetica = () => {
-  //    const filtroOrdemAlfabetica = this.state.produtos.slice(0)
-  //    filtroOrdemAlfabetica.sort(function(a,b) {
-  //      let x = a.name
-  //      let y = b.name
-  //      return x < y ? -1 : x > y ? 1 : 0
-  //    }) 
-  //   }
-
-
-  //está funcionando
-  // filtroOrdemAlfabetica = () => {
-  //   this.setState({valorOrdenacao: 'nome'})
-  //   let alfa = this.state.produtos.sort(function(a, b) {
-  //     return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)
-  //   })
-  //   this.setState({filtroOrdemAlfabetica: this.state.filtroOrdemAlfabetica = alfa})
-  //   console.log(this.state.filtroOrdemAlfabetica)
-  // }
-    
-    
-
-
-  
-
-
-
-
-
-  
-  
 
   render () {
     
@@ -273,14 +235,14 @@ export class AppContainer extends Component {
             onChange={this.pegaUrlDoisProduto}
             margin="normal"
             variant="filled"
-          />
+            />
           <FormInput
             label="Descrição"
             onChange={this.pegaDescricaoProduto}
             multiline
             margin="normal"
             variant="filled"
-          />
+            />
         </FormularioEnvio>
         <Button onClick={this.cadastraProduto} variant="contained">
             Cadastrar Produto
@@ -289,25 +251,26 @@ export class AppContainer extends Component {
 
 
 
-    const menu =  <MenuCategorias
-                    categoria={this.state.produtos.map((produto) => {
-                      return  <li>
-                                <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
-                                  {produto.category}
-                                </a>
-                              </li>
-                      })}
-                    />
+// const menu =  <MenuCategorias
+//                     categoria={this.state.produtos.map((produto) => {
+//                       return  <li>
+//                                 <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
+//                                   {produto.category}
+//                                 </a>
+//                               </li>
+//                       })}
+//                       />
 
     const paginaDeEscolha = <TelaInicial 
                               buttonComprar={this.perfilComprador}
                               buttonVender={this.perfilVendedor}
                             />
-    
 
-    
-                  
-    const paginaComprador = <PaginaComprador listaProdutos={this.state.produtos} />
+
+
+    const paginaComprador = <PaginaComprador 
+                              listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
+                            />
                             
     let telaDoComprador
     let telaDoVendedor
@@ -316,13 +279,18 @@ export class AppContainer extends Component {
       case 'comprador':
         telaDoComprador = paginaComprador
         break
-      case 'vendedor':
+        case 'vendedor':
         telaDoVendedor = paginaCadastro
         break
       default:
         telaDeEscolha = paginaDeEscolha
-    } 
-
+      } 
+      
+    const listaDeProdutos = this.state.produtos
+    const listaDeCategorias = [...new Set(listaDeProdutos.map((produto) => {
+      return produto.category
+    }))]
+    
     return (
       <PageContainer>
         <NavBar>
@@ -332,11 +300,12 @@ export class AppContainer extends Component {
           {telaDoComprador && (
           <MenuContent> 
             <MenuCategorias
-              categoria={this.state.produtos.map((produto) => {
+              exibirCategorias={this.exibeTodasCategorias}
+              categoria={listaDeCategorias.sort().map((produto) => {
                 return (
                 <li>
-                  <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
-                    {produto.category}
+                  <a href='#' onClick={() => this.selecionaCategoria(produto)}>
+                    {produto}
                   </a>
                 </li>
                 )
