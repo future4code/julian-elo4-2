@@ -128,13 +128,14 @@ export default class PaginaComprador extends React.Component {
     const produtosLista = ordenacao.map(produto => {
       return (
         <CardProduto>
-          <CardActionArea>
+          <CardActionArea onClick={this.detalhesDoProduto}>
             <CardMedia
               component="img"
               alt={produto.name}
               height="200"
               image={produto.photos[0]}
               title={produto.name}
+              
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
