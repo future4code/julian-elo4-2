@@ -193,7 +193,7 @@ export class AppContainer extends Component {
 
   mostrarCarrinho = () => {
     this.setState({mostraCarrinho: !this.state.mostraCarrinho})
-
+  }
   onChangePesquisa = (event) => {
     this.setState({inputPesquise: event.target.value})
 
