@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { BarraFiltro } from './BarraFiltro'
 
+
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -41,7 +42,8 @@ export default class PaginaComprador extends React.Component {
     ordemCategoria:[],
     valorMinimo: '',
     valorMaximo: '',
-    filtroPorIntervalo: []
+    filtroPorIntervalo: [],
+    barraFiltro: false
   }
 
   onChangeMinimo = (event) => {
@@ -56,7 +58,7 @@ export default class PaginaComprador extends React.Component {
     this.setState({produtos: this.state.produtos = this.props.listaProdutos})
     this.setState({valorOrdenacao: 'intervalo'})
     const intervaloPreco = this.state.produtos.filter((produto) => {
-      if(produto.price > this.state.valorMinimo && produto.price < this.state.valorMaximo) {
+      if(produto.price >= this.state.valorMinimo && produto.price <= this.state.valorMaximo) {
         return true
       }
     })
@@ -104,6 +106,10 @@ export default class PaginaComprador extends React.Component {
     }
   }
 
+  alteraBarraDeFiltro = () => {
+    this.setState({barraFiltro: !this.state.barraFiltro})
+  }
+
   render() {
 
     let ordenacao
@@ -123,6 +129,16 @@ export default class PaginaComprador extends React.Component {
       default:
         ordenacao = this.props.listaProdutos
         break;
+    }
+
+    let componenteBarraDeFiltro
+    if(this.state.barraFiltro) {
+      componenteBarraDeFiltro = <BarraFiltro
+                                  valorMinimo={this.onChangeMinimo}
+                                  valorMaximo={this.onChangeMaximo}
+                                  aoFiltarIntervaloPreco={this.filtrarPorIntervalo}
+                                  selectOrdenacao={this.selecionatOrdenacao.bind(this)}                           
+                                />
     }
 
     const produtosLista = ordenacao.map(produto => {
@@ -160,12 +176,8 @@ export default class PaginaComprador extends React.Component {
 
     return (
       <ContainerPrincipal>
-        <BarraFiltro
-          valorMinimo={this.onChangeMinimo}
-          valorMaximo={this.onChangeMaximo}
-          aoFiltarIntervaloPreco={this.filtrarPorIntervalo}
-          selectOrdenacao={this.selecionatOrdenacao.bind(this)}                           
-        />
+        <button onClick={this.alteraBarraDeFiltro}>Filtrar:</button>
+        {componenteBarraDeFiltro}
         <ContainerCards>
           {produtosLista}
         </ContainerCards>   

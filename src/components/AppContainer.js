@@ -5,6 +5,8 @@ import { MenuCategorias } from './MenuCategorias'
 import { FooterComponent } from './FooterComponent'
 import { TelaInicial } from './TelaInicial'
 import { Nav } from './Nav/Nav'
+import { Carrinho } from './Carrinho';
+
 
 import styled from 'styled-components'
 import axios from "axios";
@@ -13,7 +15,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import HelpIcon from '@material-ui/icons/ContactSupport';
-import { Carrinho } from './Carrinho';
 
 const PageContainer = styled.section`
 width: 100vw;
@@ -40,7 +41,6 @@ justify-content: flex-start;
 const MenuContent = styled.section`
 width: 15%;
 background-color: #F5F5F5;
-border-right: 1px #202020 solid;
 display:flex;
 justify-content: center;
 `
@@ -256,29 +256,18 @@ export class AppContainer extends Component {
           </Button>
         </div>
       </ContainerCadastro>
-
-
-
-// const menu =  <MenuCategorias
-//                     categoria={this.state.produtos.map((produto) => {
-//                       return  <li>
-//                                 <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
-//                                   {produto.category}
-//                                 </a>
-//                               </li>
-//                       })}
-//                       />
-
+    
     const paginaDeEscolha = <TelaInicial 
                               buttonComprar={this.perfilComprador}
                               buttonVender={this.perfilVendedor}
                             />
 
-
-
-    const paginaComprador = <PaginaComprador 
+    const paginaComprador = <div>
+                              <PaginaComprador 
                               listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
-                            />
+                              />
+                              <Carrinho />
+                            </div>
                             
     let telaDoComprador
     let telaDoVendedor
@@ -326,8 +315,7 @@ export class AppContainer extends Component {
         </MainContent>
         <Footer>
           <FooterComponent />
-        </Footer>
-        <Carrinho />        
+        </Footer>       
       </PageContainer>
     )
   }
