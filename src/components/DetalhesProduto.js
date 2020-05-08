@@ -50,7 +50,9 @@ export default class DetalhesProduto extends React.Component {
         <DetalhesProdutoParteDois>
           <p><strong>Categoria: </strong>categoria A</p>
           <h3>Descrição:</h3>
+
           <p>Descrição do Produto
+
           </p>
         </DetalhesProdutoParteDois>
       </ContainerPrincipal>
