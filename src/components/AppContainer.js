@@ -126,6 +126,8 @@ export class AppContainer extends Component {
       
       try {
         const resposta = await axios.post('https://us-central1-labenu-apis.cloudfunctions.net/eloFourTwo/products', body)
+        window.alert("Produto cadastrado com sucesso. Boas vendas :)")
+        window.location.reload()
       } catch(error) {
         console.log("ERROR")
       }
@@ -269,11 +271,15 @@ export class AppContainer extends Component {
 
 
 
-    const paginaComprador = <PaginaComprador detalheDoProduto={this.infoProdutos}
-                              listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
-                              />
-                              <Carrinho />
-                            </div>
+    const paginaComprador = 
+    <div><PaginaComprador 
+    detalheDoProduto={this.infoProdutos}
+    listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
+    />
+    <Carrinho />
+    </div>
+      
+                              
                             
     let telaDoComprador
     let telaDoVendedor
