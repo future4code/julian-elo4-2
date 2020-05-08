@@ -28,11 +28,11 @@ const SearchContainer = styled.div`
 `
 
 const LogoA = styled.img`
-    height: 160px
+    height: 160px;
 `
 
 const StyledTextField = styled(TextField)`
-    background: white
+    background: white;
 `
 
 const LogoB = styled.img`
@@ -54,7 +54,7 @@ export class Nav extends Component {
                     </IconButton>
                     <StyledTextField placeholder="Pesquise" onChange={this.props.OnChangeInput} value={this.props.InputPesquisa} />
                     <IconButton>
-                        <ShoppingCartIcon />
+                        <ShoppingCartIcon onClick={this.props.botaoCarrinho}/>
                     </IconButton>
                 </SearchContainer>        
             </NavContainer>

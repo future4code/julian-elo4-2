@@ -97,8 +97,8 @@ export class AppContainer extends Component {
     inputUrlDoisProduto: '',
     inputDescricaoProduto: '',
     paginaCompradorInicio: true,
+    mostraCarrinho: false,
     inputPesquise: ''
-
   }
 
   componentDidMount = () => {
@@ -190,11 +190,20 @@ export class AppContainer extends Component {
     this.setState({paginaCompradorInicio: !this.state.paginaCompradorInicio})
   }
 
+
+  mostrarCarrinho = () => {
+    this.setState({mostraCarrinho: !this.state.mostraCarrinho})
+
   onChangePesquisa = (event) => {
     this.setState({inputPesquise: event.target.value})
+
   }
 
   render () {
+    let carrinhoDeCompras
+    if(this.state.mostraCarrinho) {
+      carrinhoDeCompras = <Carrinho />
+    }
     
     const paginaCadastro =
       <ContainerCadastro>
@@ -274,6 +283,7 @@ export class AppContainer extends Component {
 
 
     const paginaComprador = <div>
+                              {carrinhoDeCompras}
                               <PaginaComprador 
 
                               
@@ -283,7 +293,6 @@ export class AppContainer extends Component {
                                 listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
 
                               />
-                              <Carrinho />
                             </div>
                             
     let telaDoComprador
@@ -310,8 +319,10 @@ export class AppContainer extends Component {
       <PageContainer>
         <NavBar>
           <Nav
+           botaoCarrinho={this.mostrarCarrinho}
           InputPesquisa={this.state.inputPesquise}
           OnChangeInput={this.onChangePesquisa}
+
           />
         </NavBar>
         <MainContent>
