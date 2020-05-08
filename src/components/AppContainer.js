@@ -5,6 +5,7 @@ import { MenuCategorias } from './MenuCategorias'
 import { FooterComponent } from './FooterComponent'
 import { TelaInicial } from './TelaInicial'
 import { Nav } from './Nav/Nav'
+import DetalhesProduto from './DetalhesProduto'
 
 import styled from 'styled-components'
 import axios from "axios";
@@ -95,6 +96,7 @@ export class AppContainer extends Component {
     inputUrlUmProduto: '',
     inputUrlDoisProduto: '',
     inputDescricaoProduto: '',
+    paginaCompradorInicio: true
 
   }
 
@@ -183,6 +185,10 @@ export class AppContainer extends Component {
 
   pegaDescricaoProduto = (event) => {
     this.setState({inputDescricaoProduto: event.target.value})
+  }
+
+  infoProdutos = () => {
+    this.setState({paginaCompradorInicio: !this.state.paginaCompradorInicio})
   }
 
   render () {
@@ -276,16 +282,17 @@ export class AppContainer extends Component {
 
 
 
-    const paginaComprador = <PaginaComprador 
+    const paginaComprador = <PaginaComprador detalhesDoProduto={this.infoProdutos}
                               listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
                             />
                             
     let telaDoComprador
     let telaDoVendedor
     let telaDeEscolha
+    const logicaPaginaComprador = this.state.paginaCompradorInicio ? paginaComprador : <DetalhesProduto />
     switch (this.state.perfilDoUsuario) {
       case 'comprador':
-        telaDoComprador = paginaComprador
+        telaDoComprador = logicaPaginaComprador
         break
         case 'vendedor':
         telaDoVendedor = paginaCadastro
