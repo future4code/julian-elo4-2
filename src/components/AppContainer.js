@@ -4,6 +4,7 @@ import { Nav } from './Nav/Nav'
 import axios from "axios";
 import styled from 'styled-components'
 import { FooterComponent } from './FooterComponent'
+import { BarraFiltro } from './BarraFiltro'
 
 import { TelaInicial } from './TelaInicial'
 import PaginaComprador from './PaginaComprador';
@@ -84,7 +85,6 @@ export class AppContainer extends Component {
     produtos:[],
     perfilDoUsuario: '',
     produtosFiltradosPorCategoria: [],
-    produtosFiltradosOrdemAlfabetica: [],
     inputNomeProduto: '',
     inputCategoriaProduto: '',
     inputPrecoProduto: '',
@@ -92,11 +92,16 @@ export class AppContainer extends Component {
     inputFormasPagamentoProduto: '',
     inputUrlUmProduto: '',
     inputUrlDoisProduto: '',
-    inputDescricaoProduto: ''
+    inputDescricaoProduto: '',
+    valorOrdenacao: 'default',
+    OrdenacaoAlfabetica: [],
+    filtroOrdemAlfabetica: []
+    
   }
 
     componentDidMount = () => {
       this.buscaProdutos();
+
     }
 
     buscaProdutos = async () => {
@@ -134,15 +139,6 @@ export class AppContainer extends Component {
       }
     })
     this.setState({produtosFiltradosPorCategoria: categoriaFiltrada})
-  }
-
-  filtroOrdemAlfabetica = () => {
-    const filtroOrdemAlfabetica = this.state.produtos.slice(0)
-    filtroOrdemAlfabetica.sort(function(a,b) {
-      let x = a.name
-      let y = b.name
-      return x < y ? -1 : x > y ? 1 : 0
-    })
   }
 
   perfilComprador = () => {
@@ -186,8 +182,45 @@ export class AppContainer extends Component {
   }
 
 
-  render() {
-this.filtroOrdemAlfabetica()
+
+
+
+
+
+  //  filtroOrdemAlfabetica = () => {
+  //    const filtroOrdemAlfabetica = this.state.produtos.slice(0)
+  //    filtroOrdemAlfabetica.sort(function(a,b) {
+  //      let x = a.name
+  //      let y = b.name
+  //      return x < y ? -1 : x > y ? 1 : 0
+  //    }) 
+  //   }
+
+
+  //está funcionando
+  // filtroOrdemAlfabetica = () => {
+  //   this.setState({valorOrdenacao: 'nome'})
+  //   let alfa = this.state.produtos.sort(function(a, b) {
+  //     return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)
+  //   })
+  //   this.setState({filtroOrdemAlfabetica: this.state.filtroOrdemAlfabetica = alfa})
+  //   console.log(this.state.filtroOrdemAlfabetica)
+  // }
+    
+    
+
+
+  
+
+
+
+
+
+  
+  
+
+  render () {
+    
     const paginaCadastro =
       <ContainerCadastro>
         <TituloCadastro>O que você deseja vender <Interrogacao fontSize="large"/></TituloCadastro>
@@ -256,40 +289,33 @@ this.filtroOrdemAlfabetica()
 
 
 
-    const menu = 
-    <MenuCategorias
-    categoria={this.state.produtos.map((produto) => {
-      return  <li>
-                <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
-                  {produto.category}
-                </a>
-              </li>
-      })}
-    />
+    const menu =  <MenuCategorias
+                    categoria={this.state.produtos.map((produto) => {
+                      return  <li>
+                                <a href='#' onClick={() => this.filtroCategoria(produto.category)}>
+                                  {produto.category}
+                                </a>
+                              </li>
+                      })}
+                    />
 
-    const paginaDeEscolha = 
-      <TelaInicial 
-      buttonComprar={this.perfilComprador}
-      buttonVender={this.perfilVendedor}
-    />
+    const paginaDeEscolha = <TelaInicial 
+                              buttonComprar={this.perfilComprador}
+                              buttonVender={this.perfilVendedor}
+                            />
     
+
+    
+                  
     const paginaComprador = <PaginaComprador listaProdutos={this.state.produtos} />
-
-
-    //Popula a lista de categorias antes da integração com a API
-    //let listaCategorias = []
-    //for(let i = 0; i < 10; i++) {
-    //  let categoria = <li>categoria {i}</li>
-    //  listaCategorias.push(categoria)
-    //}
-
+                            
     let telaDoComprador
     let telaDoVendedor
     let telaDeEscolha
     switch (this.state.perfilDoUsuario) {
       case 'comprador':
-       telaDoComprador = paginaComprador
-       break
+        telaDoComprador = paginaComprador
+        break
       case 'vendedor':
         telaDoVendedor = paginaCadastro
         break
@@ -302,11 +328,9 @@ this.filtroOrdemAlfabetica()
         <NavBar>
           <Nav/>
         </NavBar>
-        
         <MainContent>
-
-        {telaDoComprador && (
-          <MenuContent>
+          {telaDoComprador && (
+          <MenuContent> 
             <MenuCategorias
               categoria={this.state.produtos.map((produto) => {
                 return (
@@ -317,13 +341,11 @@ this.filtroOrdemAlfabetica()
                 </li>
                 )
               })}
-            
             />
-            </MenuContent>)}
-            {telaDoComprador}
-            {telaDoVendedor}
-            {telaDeEscolha}
-
+          </MenuContent>)}
+          {telaDoComprador}
+          {telaDoVendedor}
+          {telaDeEscolha}
         </MainContent>
         <Footer>
           <FooterComponent />
