@@ -24,10 +24,6 @@ const ButtonVender = styled.div`
 margin: 5vw;
 display: inline;
 `
-
-
-
-
 export class TelaInicial extends Component {
     render () {
         return (
