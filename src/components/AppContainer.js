@@ -5,6 +5,7 @@ import { MenuCategorias } from './MenuCategorias'
 import { FooterComponent } from './FooterComponent'
 import { TelaInicial } from './TelaInicial'
 import { Nav } from './Nav/Nav'
+import DetalhesProduto from './DetalhesProduto'
 import { Carrinho } from './Carrinho';
 
 
@@ -95,6 +96,7 @@ export class AppContainer extends Component {
     inputUrlUmProduto: '',
     inputUrlDoisProduto: '',
     inputDescricaoProduto: '',
+    paginaCompradorInicio: true
 
   }
 
@@ -185,6 +187,10 @@ export class AppContainer extends Component {
     this.setState({inputDescricaoProduto: event.target.value})
   }
 
+  infoProdutos = () => {
+    this.setState({paginaCompradorInicio: !this.state.paginaCompradorInicio})
+  }
+
   render () {
     
     const paginaCadastro =
@@ -272,9 +278,10 @@ export class AppContainer extends Component {
     let telaDoComprador
     let telaDoVendedor
     let telaDeEscolha
+    const logicaPaginaComprador = this.state.paginaCompradorInicio ? paginaComprador : <DetalhesProduto />
     switch (this.state.perfilDoUsuario) {
       case 'comprador':
-        telaDoComprador = paginaComprador
+        telaDoComprador = logicaPaginaComprador
         break
         case 'vendedor':
         telaDoVendedor = paginaCadastro
