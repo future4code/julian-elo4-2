@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Button } from '@material-ui/icons/';
 import './FooterStyle.css'
 import styled from 'styled-components'
 
@@ -47,8 +46,7 @@ export class FooterComponent extends Component {
             <a href='#'><I className="fab fa-cc-paypal"></I></a>
             <a href='#'><I className="fab fa-cc-amex"></I></a>
             <a href='#'><I className="fab fa-cc-diners-club"></I></a>
-            <a href='#'><I className="fab fa-cc-barcode"></I></a>              
-
+            <a href='#'><I className="fab fa-cc-barcode"></I></a>
           </Pagamentos>
           <Redes>
             <p>Siga-nos nas Redes Sociais</p>            

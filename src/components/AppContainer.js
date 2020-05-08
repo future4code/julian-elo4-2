@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import HelpIcon from '@material-ui/icons/ContactSupport';
+import { Carrinho } from './Carrinho';
 
 const PageContainer = styled.section`
 width: 100vw;
@@ -325,7 +326,8 @@ export class AppContainer extends Component {
         </MainContent>
         <Footer>
           <FooterComponent />
-        </Footer>        
+        </Footer>
+        <Carrinho />        
       </PageContainer>
     )
   }
