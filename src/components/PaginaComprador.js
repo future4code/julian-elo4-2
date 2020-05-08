@@ -1,21 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Filtro } from './BarraFiltro'
+import { BarraFiltro } from './BarraFiltro'
 
-import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
 
 const ContainerPrincipal = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
 `
-
 const ContainerCards = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -34,8 +33,75 @@ const CardProduto = styled(Card)`
 `
 
 export default class PaginaComprador extends React.Component {
+  state = {
+    valorOrdenacao: 'default',
+    produtos: [],
+    ordemPreco:[],
+    ordemAlfabetica: [],
+    ordemCategoria:[],
+  }
+
+  ordemPreco = () => {
+    this.setState({produtos: this.state.produtos = this.props.listaProdutos})
+    this.setState({valorOrdenacao: 'preco'})
+    let ordenacaoPreco = this.state.produtos.sort(function(a, b) {
+      return (a.price > b.price) ? 1 : ((b.price > a.price) ? -1 : 0)
+    })
+    this.setState({ordemPreco: this.state.ordemPreco = ordenacaoPreco})
+    console.log(this.state.ordemPreco)
+  }
+
+  ordemAlfabetica = () => {
+    this.setState({produtos: this.state.produtos = this.props.listaProdutos})
+    this.setState({valorOrdenacao: 'nome'})
+    let ordenacaoAlfabetica = this.state.produtos.sort(function(a, b) {
+      return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)
+    })
+    this.setState({ordemAlfabetica: this.state.ordemAlfabetica = ordenacaoAlfabetica})
+  }
+  
+  ordemCategoria = () => {
+    this.setState({produtos: this.state.produtos = this.props.listaProdutos})
+    this.setState({valorOrdenacao: 'categoria'})
+    let ordenacaoCategoria = this.state.produtos.sort(function(a, b) {
+      return (a.category > b.category) ? 1 : ((b.category > a.category) ? -1 : 0)
+    })
+    this.setState({ordemCategoria: this.state.ordemCategoria = ordenacaoCategoria})
+  }
+
+  selecionatOrdenacao = (event) => {
+    this.setState({valorOrdenacao: event.target.value})
+    switch (event.target.value) {
+      case 'preco':
+        return this.ordemPreco()
+      case 'nome':
+        return this.ordemAlfabetica()
+      case 'categoria':
+        return this.ordemCategoria()
+      default:
+        return 'default';
+    }
+  }
+
   render() {
-    const produtosLista = this.props.listaProdutos.map(produto => {
+
+    let ordenacao
+    switch (this.state.valorOrdenacao) {
+      case 'preco':
+        ordenacao = this.state.produtos        
+        break;
+      case 'nome':
+        ordenacao = this.state.ordemAlfabetica
+        break;
+      case 'categoria':
+        ordenacao = this.state.produtos
+        break;
+      default:
+        ordenacao = this.props.listaProdutos
+        break;
+    }
+
+    const produtosLista = ordenacao.map(produto => {
       return (
         <CardProduto>
           <CardActionArea>
@@ -68,13 +134,13 @@ export default class PaginaComprador extends React.Component {
     })
 
     return (
-      
       <ContainerPrincipal>
-        <Filtro />
+        <BarraFiltro
+          selectOrdenacao={this.selecionatOrdenacao.bind(this)}                           
+        />
         <ContainerCards>
           {produtosLista}
-        </ContainerCards>
-        
+        </ContainerCards>   
       </ContainerPrincipal>
     );
   }

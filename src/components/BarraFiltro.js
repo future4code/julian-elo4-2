@@ -33,7 +33,7 @@ const StyledTextField = styled(TextField)`
   background: white;
 `;
 
-export class Filtro extends Component {
+export class BarraFiltro extends Component {
     render() {
         return (
             <FiltroContainer>
@@ -50,10 +50,11 @@ export class Filtro extends Component {
                 </ValorContainer>
                 <div>
                     <span>Ordenar por: </span>
-                    <select>
-                        <option>Preço</option>
-                        <option>Nome</option>
-                        <option>Categoria</option>
+                    <select onChange={this.props.selectOrdenacao}>
+                        <option vaule='-'> - </option>
+                        <option value="preco">Preço</option>
+                        <option value="nome" >Nome</option>
+                        <option value="categoria" >Categoria</option>
                     </select>
                 </div>
             </FiltroContainer>
