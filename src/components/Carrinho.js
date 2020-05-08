@@ -28,10 +28,8 @@ export class Carrinho extends Component {
       return (
         <>
           <Container>
-            <div>
-              <h1>Carrinho de compras</h1>
-            </div>
             <Itens>
+              <h1>Carrinho de compras</h1>
               <h4>Produtos adicionados:</h4>
               <div>
                 <AppBar position="static" color="default">

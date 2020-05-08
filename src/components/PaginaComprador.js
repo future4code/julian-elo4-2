@@ -141,7 +141,26 @@ export default class PaginaComprador extends React.Component {
                                 />
     }
 
-    const produtosLista = ordenacao.map(produto => {
+    let inputPesquisa = this.props.InputBusca
+
+    let ordenacaoComPesquisa = []
+    
+    if (inputPesquisa === '') {
+      ordenacaoComPesquisa = ordenacao
+    } else {
+      ordenacaoComPesquisa = ordenacao.filter(produto => {
+        return produto.name.includes(inputPesquisa) || produto.description.includes(inputPesquisa)
+      })
+      console.log(inputPesquisa)
+      console.log(ordenacao)
+    }
+    //criar props p receber input de busca
+    //if input === ''
+    //aplicar filtro de nome a variavel "ordenacao"
+
+    
+
+    const produtosLista = ordenacaoComPesquisa.map(produto => {
       return (
         <CardProduto>
           <CardActionArea onClick={this.props.detalheDoProduto}>

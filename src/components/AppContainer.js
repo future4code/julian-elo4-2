@@ -96,8 +96,9 @@ export class AppContainer extends Component {
     inputUrlUmProduto: '',
     inputUrlDoisProduto: '',
     inputDescricaoProduto: '',
-    paginaCompradorInicio: true
-
+    paginaCompradorInicio: true,
+    mostraCarrinho: false,
+    inputPesquise: ''
   }
 
   componentDidMount = () => {
@@ -141,7 +142,6 @@ export class AppContainer extends Component {
     })
     this.setState({produtosPorCategoria: categoriaSelecionada})
     this.setState({exibeCategoria: true})
-    //this.setState({produtosPorCategoria: categoriaSelecionada})
   }
 
   exibeTodasCategorias = () => {
@@ -192,7 +192,20 @@ export class AppContainer extends Component {
     this.setState({paginaCompradorInicio: !this.state.paginaCompradorInicio})
   }
 
+
+  mostrarCarrinho = () => {
+    this.setState({mostraCarrinho: !this.state.mostraCarrinho})
+  }
+  onChangePesquisa = (event) => {
+    this.setState({inputPesquise: event.target.value})
+
+  }
+
   render () {
+    let carrinhoDeCompras
+    if(this.state.mostraCarrinho) {
+      carrinhoDeCompras = <Carrinho />
+    }
     
     const paginaCadastro =
       <ContainerCadastro>
@@ -271,15 +284,19 @@ export class AppContainer extends Component {
 
 
 
-    const paginaComprador = 
-    <div><PaginaComprador 
-    detalheDoProduto={this.infoProdutos}
-    listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
-    />
-    <Carrinho />
-    </div>
-      
+
+    const paginaComprador = <div>
+                              {carrinhoDeCompras}
+                              <PaginaComprador 
+
                               
+                              InputBusca={this.state.inputPesquise} 
+
+                                detalheDoProduto={this.infoProdutos}
+                                listaProdutos={this.state.exibeCategoria ? this.state.produtosPorCategoria : this.state.produtos} 
+
+                              />
+                            </div>
                             
     let telaDoComprador
     let telaDoVendedor
@@ -304,7 +321,12 @@ export class AppContainer extends Component {
     return (
       <PageContainer>
         <NavBar>
-          <Nav/>
+          <Nav
+           botaoCarrinho={this.mostrarCarrinho}
+          InputPesquisa={this.state.inputPesquise}
+          OnChangeInput={this.onChangePesquisa}
+
+          />
         </NavBar>
         <MainContent>
           {telaDoComprador && (
